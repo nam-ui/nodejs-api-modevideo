@@ -1,0 +1,13 @@
+mission 1 [LOGIN with facebook] URL -> https sử dụng ngrok để fake https chắc chắn rồi
+-> Bước 2: lên developers của facebook config URL OAuth
+-> vậy thì cần gì để login
+
+-> 1. method bên front-end ( đây là cái nút điều hướng href quá url loggin của fb )
+required {   client_id: process.env.NODE_ENV_FB_APP_ID, redirect_uri: 'https://c646-113-165-13-2.ap.ngrok.io/',  }
+redirect_uri sau khi loggin thành công thì nó nhảy vô req của bạn =Đ
+
+-> head - req - access_token
+-> 2. method sau khi loggin thành công nó nhảy vô api loggin fb của bạn :)) bạn bắt thông tin người ta rồi nhét vào db thôi =Đ
+
+
+mission 2 [LOGIN with google]
