@@ -21,7 +21,7 @@ import Singleton from './init';
 import SwaggerJsOptions from "./plugins/swagger";
 import ReviewController from './app/reviews/reviews.controller';
 import PostController from './app/form/submitPost.controller';
-
+import MapController from './app/map/map.controller';
 dotenv.config();
 
 export const runningID: Readonly<ReturnType<typeof uuidv4>> = uuidv4();
@@ -101,14 +101,15 @@ app.get('/logingoogle', function (req, res) {
     header: "Some users"
   });
 });
-
 const auth = new AuthController(app, "/auth");
 const review = new ReviewController(app, "/reviews");
 const post = new PostController(app, "/form");
+const map = new MapController(app, "/map");
 
 auth.start();
 review.start();
 post.start();
+map.start();
 
 new ErrorHandler(app).handler();
 

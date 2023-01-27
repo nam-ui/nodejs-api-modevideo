@@ -80,7 +80,7 @@ class AuthService extends MainRouter {
                     if (!isExist) {
                         await new AccountMongo({ name: _res.data.name, email: _res.data.email, avatar: _res.data.picture, isByPartyGoogle: true, }).save();
                     }
-                    const hashToken = await authHashToken({ name: _res.data.name as string, email: _res.data.email as string })
+                    const hashToken: any = await authHashToken({ name: _res.data.name as string, email: _res.data.email as string })
                     await updateRefreshToken(_res.data.email as string, hashToken?.refreshToken as string)
                     return res.send({ status: 200, message: `${this._message} login-google-success`, data: { expiresIn: process.env.NODE_ENV_EXPIRES_IN_JWT, name: _res.data.name, email: _res.data.email, avatar: _res.data.picture, access_token: hashToken?.refreshToken, refresh_token: hashToken?.refreshToken } });
                 }

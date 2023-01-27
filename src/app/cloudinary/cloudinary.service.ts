@@ -11,10 +11,12 @@ class CloudinaryService {
     async saveVideo(file: any) {
         await this.cloudinary.video(file, { quality: "auto", fetch_format: "auto" });
     }
-    async uploadImage(uploadPath: any) {
-        await this.cloudinary.uploader.upload(uploadPath).then(result => console.log(result)
-        ).catch(err => console.log(err)
-        );
+    uploadImage(uploadPath: any) {
+        return new Promise((resolve) => {
+            this.cloudinary.uploader.upload(
+                uploadPath, { resource_type: "auto" }
+            ).then(result => resolve(result)).catch(err => console.log(err));
+        })
     }
 
 }
