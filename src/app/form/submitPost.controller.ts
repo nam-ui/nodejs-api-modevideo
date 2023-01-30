@@ -17,14 +17,19 @@ export default class PostController {
             try {
                 if (req.body.categories === "video-long") {
                     const createVideoLong = await PostService.createVideoLong(req, res, next);
-                    if (createVideoLong) {
-                        res.send({
-    
+                    if (!createVideoLong) {
+                        return res.status(400).send({
+                            status: 400,
+                            message: "[Submit-post] error not created"
                         });
                     }
+                    return res.send({
+                        status: 200,
+                        data: createVideoLong,
+                    });
                 }
             } catch (error) {
-                return res.send({ status: 404, message: error })
+                return res.status(400).send({ status: 400, message: error })
             }
         });
     }

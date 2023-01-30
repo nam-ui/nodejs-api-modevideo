@@ -31,5 +31,6 @@ export default class SnapShot {
 
 const init = {
     project: "api-candy",
+    projectDir: "apiCandy",
 }
 export { init };

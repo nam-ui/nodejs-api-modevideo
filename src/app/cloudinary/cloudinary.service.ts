@@ -12,25 +12,25 @@ class CloudinaryService {
     async saveVideo(file: any) {
         await this.cloudinary.video(file, { quality: "auto", fetch_format: "auto" });
     }
-    uploadImage(uploadPath: any) {
-        return new Promise((resolve) => {
+    uploadFile(uploadPath: string, public_id: string) {
+        return new Promise((resolve, reject) => {
             this.cloudinary.uploader.upload(
-                uploadPath, { resource_type: "auto" }
-            ).then(result => resolve(result)).catch(err => console.log(err));
+                uploadPath, { resource_type: "auto", public_id: public_id }
+            ).then(result => resolve(result)).catch(err => reject(err));
         })
     }
-    async cloudinaryServiceFlastFile(file: UploadedFile, dirFile: String) {
-        try {
-            var _file = file;
-            await path.join(__dirname + dirFile + _file.name);
-            await this.uploadImage(path.join(__dirname + dirFile + _file.name));
-            await fs.unlinkSync(__dirname + dirFile + _file.name);
-            return true;    
-        } catch (error) {
-            console.error(error);
-            return false;            
-        }
+    async cloudinaryServiceFlastFile(file: UploadedFile, dirFile: String, public_id: string) {
+        let pathDir = path.join(dirFile + file.name);
+        await file.mv(pathDir);
+        return await this.uploadFile(pathDir, `${public_id}/${file.name}`).then(result => result).catch(() => false);
     }
-
+    async deleteFolder(public_id: string) {
+        await this.cloudinary.api.delete_folder(`apiCandy/videoLong/decodeTokensuperId`, console.log);
+    }
+    async deleteAllFile(public_id: string) {
+        await this.cloudinary.uploader.destroy(public_id,);
+    }
 }
 export default new CloudinaryService(Cloudinary.v2);
+
+
