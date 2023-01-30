@@ -9,6 +9,7 @@ const accountShema = new Schema<IAccount>({
     refreshToken: { type: String, require: true },
     isByPartyFacebook: { type: Boolean, default: false },
     isByPartyGoogle: { type: Boolean, default: false },
+    superId: { type: String, require: true, unique: true },
 });
 const AccountMongo = model<IAccount>('Users', accountShema);
 export default AccountMongo;

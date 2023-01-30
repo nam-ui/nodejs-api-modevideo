@@ -1,11 +1,35 @@
-export default class Singleton {
-    private static instance: Singleton;
-    private constructor() { }
-    public static getInstance(): Singleton {
-        if (!Singleton.instance) {
-            Singleton.instance = new Singleton();
+import CategoriesService from "./app/categories/categories.service";
+
+export default class SnapShot {
+    private static instance: SnapShot;
+    private constructor() {
+        CategoriesService.createSnapShot();
+        return {
+            logo: {
+                dark: "clouldinary-url",
+                light: "clouldinary-url",
+                main: "clouldinary-url",
+            },
+            reserve_images: {
+                avatar: {
+                    male: "",
+                    female: "",
+                    different: '',
+                },
+                images_items: "",
+            },
         }
-        return Singleton.instance;
+    }
+    public static getInstance(): SnapShot {
+        if (!SnapShot.instance) {
+            SnapShot.instance = new SnapShot();
+        }
+        return SnapShot.instance;
     }
 
 }
+
+const init = {
+    project: "api-candy",
+}
+export { init };

@@ -1,6 +1,7 @@
 import Cloudinary from "cloudinary";
 import { UploadedFile } from "express-fileupload";
 import path from "path";
+import fs from "fs";
 class CloudinaryService {
     constructor(private readonly cloudinary: typeof Cloudinary.v2) {
         this.cloudinary = cloudinary;
@@ -17,6 +18,18 @@ class CloudinaryService {
                 uploadPath, { resource_type: "auto" }
             ).then(result => resolve(result)).catch(err => console.log(err));
         })
+    }
+    async cloudinaryServiceFlastFile(file: UploadedFile, dirFile: String) {
+        try {
+            var _file = file;
+            await path.join(__dirname + dirFile + _file.name);
+            await this.uploadImage(path.join(__dirname + dirFile + _file.name));
+            await fs.unlinkSync(__dirname + dirFile + _file.name);
+            return true;    
+        } catch (error) {
+            console.error(error);
+            return false;            
+        }
     }
 
 }

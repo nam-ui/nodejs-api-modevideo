@@ -7,7 +7,8 @@ export interface IAccount {
     roles: [string],
     refreshToken: string,
     isByPartyGoogle: false,
-    isByPartyFacebook: false
+    isByPartyFacebook: false,
+    superId: string,
 }
 export interface IAccountReq {
     name: string;
