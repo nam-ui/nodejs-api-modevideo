@@ -1,16 +1,13 @@
-import MainRouter from "../index.interface";
 import express from "express";
-import path from "path";
 import { UploadedFile } from "express-fileupload";
-import cloudinaryService from "../cloudinary/cloudinary.service";
-import PostMongo from "./post.dto";
-import FileService from "../files/files.service";
 import fs from "fs";
-import { verify } from "jsonwebtoken";
-import CategoriesService from "../categories/categories.service";
 import { init } from "../../init";
+import CategoriesService from "../categories/categories.service";
+import cloudinaryService from "../cloudinary/cloudinary.service";
 import CommentsService from "../comments/comments.service";
 import DescriptionsService from "../descriptions/descriptions.service";
+import FileService from "../files/files.service";
+import MainRouter from "../index.interface";
 import RatingService from "../rating/rating.service";
 import StatusService from "../status/rating.service";
 class PostService extends MainRouter {

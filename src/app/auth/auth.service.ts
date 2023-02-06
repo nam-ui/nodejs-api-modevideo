@@ -10,7 +10,7 @@ import MainRouter from "../index.interface";
 import AccountMongo from "./auth.dto";
 
 const oauth2 = google.auth.OAuth2;
-class AuthService extends MainRouter {
+export default class AuthService extends MainRouter {
     oauth2Client: OAuth2Client;
     constructor() {
         super();
@@ -91,6 +91,7 @@ class AuthService extends MainRouter {
         }
     }
 
+
 }
 async function checkAccountInDatabase(email: string) {
     let isExist = false;
@@ -119,4 +120,21 @@ export const updateRefreshToken = async (email: string, refresh_token: string) =
         console.error({ status: 400, message: `[auth] ${error} - update token`, data: null })
     }
 }
-export default AuthService;
+
+export const getURLLogin = (): { fb: String, google: String } => {
+    return {
+        fb: `https://www.facebook.com/v15.0/dialog/oauth?${queryString.stringify({
+            client_id: process.env.NODE_ENV_FB_APP_ID,
+            redirect_uri: process.env.NODE_ENV_FB_APP_REDIRECT_URL,
+        })}`,
+        google: `https://accounts.google.com/o/oauth2/v2/auth?${queryString.stringify({
+            client_id: process.env.NODE_ENV_GOOGLE_APP_ID,
+            redirect_uri: process.env.NODE_ENV_GOOGLE_APP_REDIRECT_URL,
+            scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email', "openid",
+            ].join(' '),
+            access_type: 'offline',
+            response_type: 'code',
+            prompt: 'consent',
+        })}`
+    }
+}

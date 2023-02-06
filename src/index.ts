@@ -17,7 +17,6 @@ import Mongoose from "./plugins/mongoose";
 import AuthController from "./app/auth/auth.controller"
 import CloudinaryController from './plugins/cloudinary';
 import EsSearchController from './app/esSearch/esSearch.controller';
-import Singleton from './init';
 import SwaggerJsOptions from "./plugins/swagger";
 import ReviewController from './app/reviews/reviews.controller';
 import PostController from './app/form/submitPost.controller';
@@ -25,12 +24,9 @@ import MapController from './app/map/map.controller';
 dotenv.config();
 
 export const runningID: Readonly<ReturnType<typeof uuidv4>> = uuidv4();
-
 Mongoose.getInstance();
 CloudinaryController.getInstance();
 EsSearchController.getInstance();
-EsSearchController.run();
-
 
 const app: Express = express();
 if (process.env.NODE_ENV == 'test') { app.use(logger(':status :method :url :response-time', { skip: function (req, res) { return res.statusCode < 400 } })) }
@@ -66,7 +62,6 @@ app.use(cors({
 
 app.use('/static/images', express.static(path.join(__dirname, 'public/images')));
 app.get('/', (req: Request, res: Response) => {
-  Singleton.getInstance();
   res.send(`running id: ${runningID}`);
 });
 app.engine('.html', require('ejs').__express);

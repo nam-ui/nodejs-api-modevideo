@@ -1,5 +1,11 @@
 import express from "express";
-import SnapShot from "../../init";
+import _ from "lodash";
+
+import { verify } from "jsonwebtoken";
+import AppService from "../app/app.service";
+import { getURLLogin } from "../auth/auth.service";
+import CategoriesService from "../categories/categories.service";
+
 export default class MapController {
     private static application: express.Application;
     private static baseURL: string;
@@ -10,27 +16,24 @@ export default class MapController {
     start() {
         MapController.application.get(`${MapController.baseURL}/snapshot`, async (req, res, next) => {
             try {
-                return {
-                    app: SnapShot.getInstance(),
-                    video_categories: ["Gaming","Movies","Sports","Entertainment"],
-                };
-            } catch (error) {
-                return res.send({ status: 404, message: error })
-            }
-        });
-        MapController.application.get(`${MapController.baseURL}/snapshot-account`, async (req, res, next) => {
-            try {
-                return {
-                    info: {
-                        superId: "hashtagsid",
-                        name: "",
-                        gender: "",
-                        email: "",
+                var results: Record<string, any> = {};
+                if (req.headers.x_authorization) {
+                    const decodeToken = verify(req.headers.x_authorization as string, process.env.NODE_ENV_ACCESS_TOKEN_SECRET as string, { ignoreExpiration: true, }) as { name: string, email: string, superId: String };
+                    decodeToken.superId ? results.account = {
+                        superId: decodeToken.superId,
+                        name: decodeToken.name,
+                        gender: "Male",
+                        email: decodeToken.email,
                         membershipId: "Free Membership",
-                    },
-                };
+                    } : false;
+                }
+                var _app = (await AppService.getAll()).map(el => _.get(el, "app"));
+                if (_app) results.app = { ..._app, ...getURLLogin() };
+                var categories = await CategoriesService.getAll();
+                if (categories) results.categories = categories;
+                return res.status(200).send(results);
             } catch (error) {
-                return res.send({ status: 404, message: error })
+                return res.status(400).send({ message: `${error}` });
             }
         });
     }

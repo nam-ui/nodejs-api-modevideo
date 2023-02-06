@@ -1,24 +1,11 @@
+import AppService from "./app/app/app.service";
 import CategoriesService from "./app/categories/categories.service";
 
 export default class SnapShot {
     private static instance: SnapShot;
     private constructor() {
         CategoriesService.createSnapShot();
-        return {
-            logo: {
-                dark: "clouldinary-url",
-                light: "clouldinary-url",
-                main: "clouldinary-url",
-            },
-            reserve_images: {
-                avatar: {
-                    male: "",
-                    female: "",
-                    different: '',
-                },
-                images_items: "",
-            },
-        }
+        AppService.createSnapShot();
     }
     public static getInstance(): SnapShot {
         if (!SnapShot.instance) {
@@ -32,5 +19,6 @@ export default class SnapShot {
 const init = {
     project: "api-candy",
     projectDir: "apiCandy",
+
 }
 export { init };
