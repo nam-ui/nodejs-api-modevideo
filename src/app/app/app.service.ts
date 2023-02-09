@@ -14,6 +14,7 @@ export default class AppService {
             if (!!!result) new AppMongo({
                 project: init.project,
                 app: {
+                    name: init.project,
                     logo: {
                         dark: "clouldinary-url",
                         light: "clouldinary-url",

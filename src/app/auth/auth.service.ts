@@ -70,6 +70,7 @@ export default class AuthService extends MainRouter {
     public async loginGoogle(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             const code = req.query.code as string;
+            console.log(code);
             const data_google = await this.oauth2Client.getToken(code);
             const oauth2Client = new oauth2();
             oauth2Client.setCredentials({ access_token: data_google.tokens.access_token });
