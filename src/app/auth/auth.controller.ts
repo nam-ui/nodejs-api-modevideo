@@ -1,5 +1,6 @@
 import express from "express";
 import { google } from "googleapis";
+import { middleware_auth } from "../middleware/auth";
 import AuthService from "./auth.service";
 
 
@@ -13,39 +14,20 @@ export default class AuthController {
     }
     start() {
         const authService = new AuthService();
-        AuthController.application.get(`${AuthController.baseURL}/o/facebook`, async (req, res, next) => {
+        AuthController.application.post(`${AuthController.baseURL}/o/google`, async (req, res, next) => {
             try {
-                await authService.loginFacebook(req, res, next);
-            } catch (error) {
-                return res.send({ status: 404, message: error })
-            }
-        });
-        AuthController.application.get(`${AuthController.baseURL}/o/google`, (req, res, next) => {
-            console.log("CALL ME");
-            try {
-                authService.loginGoogle(req, res, next);
+                await authService.loginGoogle(req, res, next);
             } catch (error) {
                 return res.send({ status: 404, message: error, data: null })
             }
         });
-        AuthController.application.post(`${AuthController.baseURL}/call/google`, async (req, res, next) => {
-            console.log("CALL ME_________CALLLLLLLLLLLLL");
-            console.log(req.body);
-
+        AuthController.application.post(`${AuthController.baseURL}/o/google/info`, async (req, res, next) => {
             try {
-                const oauth2Client = new oauth2();
-                oauth2Client.credentials = req.body.credential;
-                const information_account = google.oauth2({ auth: oauth2Client, version: 'v2' });
-                return information_account.userinfo.get(async (_err, _res) => {
-                    console.log(_res);
-                    if (_res?.data) {
-                        res.send({ status: _res.data });
-                    }
-                })
-
+                await middleware_auth;
+                authService.getInfo(req, res, next);
             } catch (error) {
                 return res.send({ status: 404, message: error, data: null })
             }
-        });
+        })
     }
 }

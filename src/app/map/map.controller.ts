@@ -4,7 +4,7 @@ import _ from "lodash";
 import { verify } from "jsonwebtoken";
 import AppService from "../app/app.service";
 import { getURLLogin } from "../auth/auth.service";
-import CategoriesService from "../categories/categories.service";
+import { middleware_auth } from "../middleware/auth";
 
 export default class MapController {
     private static application: express.Application;
@@ -29,8 +29,6 @@ export default class MapController {
                 }
                 var _app = (await AppService.getAll()).map(el => _.get(el, "app"));
                 if (_app) results.app = { ..._app, ...getURLLogin() };
-                var categories = await CategoriesService.getAll();
-                if (categories) results.categories = categories;
                 return res.status(200).send(results);
             } catch (error) {
                 return res.status(400).send({ message: `${error}` });

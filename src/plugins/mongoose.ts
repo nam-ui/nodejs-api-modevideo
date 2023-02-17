@@ -9,7 +9,6 @@ export default class Mongoose {
                 .connect(process.env.NODE_ENV_MONGO, { connectTimeoutMS: 1000 })
                 .then((result) => {
                     console.log('🍀 connected data mongodb ✅')
-                    SnapShot.getInstance();
                 })
                 .catch((error) => {
                     console.log(error);

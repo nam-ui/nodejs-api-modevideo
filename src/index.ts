@@ -21,10 +21,11 @@ import SwaggerJsOptions from "./plugins/swagger";
 import ReviewController from './app/reviews/reviews.controller';
 import PostController from './app/form/submitPost.controller';
 import MapController from './app/map/map.controller';
+import SnapShot from './init';
 dotenv.config();
 
 export const runningID: Readonly<ReturnType<typeof uuidv4>> = uuidv4();
-Mongoose.getInstance();
+SnapShot.getInstance();
 CloudinaryController.getInstance();
 EsSearchController.getInstance();
 
@@ -82,7 +83,7 @@ app.get('/loginfb', function (req, res) {
 app.get('/logingoogle', function (req, res) {
   const stringifiedParams = queryString.stringify({
     client_id: process.env.NODE_ENV_GOOGLE_APP_ID,
-    redirect_uri: process.env.NODE_ENV_GOOGLE_APP_REDIRECT_URL,
+    redirect_uri: "https://107b-14-180-184-110.ap.ngrok.io/auth/o/google",
     scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email', "openid",
     ].join(' '),
     access_type: 'offline',

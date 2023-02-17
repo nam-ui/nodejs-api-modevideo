@@ -25,6 +25,3 @@ class EsSearchController {
     }
 }
 export default EsSearchController;
-
-// user { fullName, avatar, hasdId }
-// product {  tags, image,  }

@@ -1,7 +1,4 @@
-import { Types } from "mongoose";
+import { Schema } from "mongoose";
 export interface IFiles {
-    dir: String,
-    upload: String,
-    perview: String,
-    featuredImage: String,
+    dir: Map<string, any>;
 }
