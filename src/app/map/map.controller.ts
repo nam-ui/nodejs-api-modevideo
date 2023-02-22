@@ -4,7 +4,6 @@ import _ from "lodash";
 import { verify } from "jsonwebtoken";
 import AppService from "../app/app.service";
 import { getURLLogin } from "../auth/auth.service";
-import { middleware_auth } from "../middleware/auth";
 
 export default class MapController {
     private static application: express.Application;

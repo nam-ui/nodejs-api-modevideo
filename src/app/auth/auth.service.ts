@@ -14,6 +14,8 @@ import TokenMongo from "./token.dto"
 import FileService from "../files/files.service";
 import { init } from "../../init";
 import FilesMongo from "../files/files.dto";
+import VideoMongo from "../video/video.dto";
+import StatusMongo from "../status/status.dto";
 const oauth2 = google.auth.OAuth2;
 export default class AuthService extends MainRouter {
     oauth2Client: OAuth2Client;
@@ -39,7 +41,7 @@ export default class AuthService extends MainRouter {
             account = await AccountMongo.findOne({ sub: req.body.sub, email: req.body.email }).then(async account => {
                 if (!!!account) {
                     accountExist = false;
-                    file = await new FilesMongo({ dir: new Map<string, any>().set("account", { dir: `${init.projectDir}/${req.body.sub}` }) }).save();
+                    file = await new FilesMongo({ dir: { dir: `${init.projectDir}/${req.body.sub}` } }).save();
                     token = await new TokenMongo({ access_token: access_token, refresh_token: refresh_token }).save();
                     await new AccountMongo({ email: req.body.email, family_name: req.body.family_name, given_name: req.body.given_name, picture: req.body.picture, sub: req.body.sub, id_tokens: token.id, id_files: file.id }).save();
                 }
@@ -71,11 +73,33 @@ export default class AuthService extends MainRouter {
 
     public async getInfo(req: express.Request, res: express.Response, next: express.NextFunction) {
         var account;
-        account = await AccountMongo.findOne({ sub: req.body.sub, email: req.body.email })
+        account = await AccountMongo.findOne({ sub: req.body.sub, email: req.body.email });
         return res.send({ status: 200, message: "success", data: { account: account } })
     }
+    public async getProfile(req: express.Request, res: express.Response, next: express.NextFunction) {
+        var account;
+        var video;
+        account = await AccountMongo.findOne({sub: req.params.id});
+        video = await VideoMongo.find({ id_account: account?.id });
+        const result_video = await Promise.all(video.map(async el => {
+            var status = await StatusMongo.findById(el.id_status);
+            return {
+                id: el.id,
+                toPath: `@${(req.params.id)}/video/${el.id}`,
+                video_url: el.video_url,
+                cover_picture: el.cover_picture,
+                note: el.note,
+                tag_account: el.tag_account,
+                hashtag: el.hashtag,
+                status: {
+                    view: status?.view,
+                    heart: status?.heart,
+                }
+            }
+        })).then(value => value);
+        return res.send({ status: 200, message: "success", data: { account: account, video: result_video } })
+    }
 }
-
 export const getURLLogin = (): { fb: String, google: String } => {
     return {
         fb: `https://www.facebook.com/v15.0/dialog/oauth?${queryString.stringify({

@@ -19,9 +19,10 @@ import CloudinaryController from './plugins/cloudinary';
 import EsSearchController from './app/esSearch/esSearch.controller';
 import SwaggerJsOptions from "./plugins/swagger";
 import ReviewController from './app/reviews/reviews.controller';
-import PostController from './app/form/submitPost.controller';
+import VideoController from './app/video/video.controller';
 import MapController from './app/map/map.controller';
 import SnapShot from './init';
+import { catchToken } from './app/middleware/auth';
 dotenv.config();
 
 export const runningID: Readonly<ReturnType<typeof uuidv4>> = uuidv4();
@@ -99,13 +100,14 @@ app.get('/logingoogle', function (req, res) {
 });
 const auth = new AuthController(app, "/auth");
 const review = new ReviewController(app, "/reviews");
-const post = new PostController(app, "/form");
+const video = new VideoController(app, "/video");
 const map = new MapController(app, "/map");
 
 auth.start();
 review.start();
-post.start();
+video.start();
 map.start();
+catchToken(app);
 
 new ErrorHandler(app).handler();
 

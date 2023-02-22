@@ -4,8 +4,6 @@ penssl req -new -key key.pem -out csr.pem
 penssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
 
 
-
-
 video
  - 	id
  - 	id_file
@@ -13,10 +11,6 @@ video
 	cách tổ chức dirFile
 	apiCandy/sub-id/fileVideo
 		/ id video Gồm tệp về video + cover-picture
- - 	id_descriptions
-	--  note: ex Not map and cap no @... ? # ... ? ...
-	-- @
-	-- #
  - 	id_comments mỗi sản phẩm = 1 
 	-- id_user of video
 	-- video_review type Map 
@@ -39,3 +33,6 @@ video
 			 }
 		} 
  - 	id_status
+	only_view : "" | "" | ""
+	access_user: ["comments","Duet",Stitch];
+	

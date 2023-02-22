@@ -16,7 +16,7 @@ class CloudinaryService {
         return new Promise((resolve, reject) => {
             this.cloudinary.uploader.upload(
                 uploadPath, { resource_type: "auto", public_id: public_id }
-            ).then(result => resolve(result)).catch(err => reject(err));
+            ).then(result => resolve(result.url)).catch(err => reject(err));
         })
     }
     async cloudinaryServiceFlastFile(file: UploadedFile, dirFile: String, public_id: string) {

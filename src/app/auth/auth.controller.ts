@@ -23,11 +23,17 @@ export default class AuthController {
         });
         AuthController.application.post(`${AuthController.baseURL}/o/google/info`, async (req, res, next) => {
             try {
-                await middleware_auth;
-                authService.getInfo(req, res, next);
+                await authService.getInfo(req, res, next);
             } catch (error) {
                 return res.send({ status: 404, message: error, data: null })
             }
         })
+        AuthController.application.get(`${AuthController.baseURL}/profile/:id`, async (req, res, next) => {
+            try {
+                await authService.getProfile(req, res, next);
+            } catch (error) {
+                return res.send({ status: 404, message: error, data: null })
+            }
+        });
     }
 }
