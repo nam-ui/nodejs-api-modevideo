@@ -4,31 +4,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.runningID = void 0;
-const express_1 = __importDefault(require("express"));
-const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
-const uuid_1 = require("uuid");
+const dotenv_1 = __importDefault(require("dotenv"));
+const express_1 = __importDefault(require("express"));
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
+const express_session_1 = __importDefault(require("express-session"));
 const morgan_1 = __importDefault(require("morgan"));
 const path_1 = __importDefault(require("path"));
-const express_session_1 = __importDefault(require("express-session"));
 const query_string_1 = __importDefault(require("query-string"));
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
-const express_fileupload_1 = __importDefault(require("express-fileupload"));
-const ErrorHandler_1 = __importDefault(require("./utils/ErrorHandler"));
+const uuid_1 = require("uuid");
+const ngrok_1 = __importDefault(require("ngrok"));
 const auth_controller_1 = __importDefault(require("./app/auth/auth.controller"));
-const cloudinary_1 = __importDefault(require("./plugins/cloudinary"));
+const comments_controller_1 = __importDefault(require("./app/comments/comments.controller"));
 const esSearch_controller_1 = __importDefault(require("./app/esSearch/esSearch.controller"));
-const swagger_1 = __importDefault(require("./plugins/swagger"));
+const map_controller_1 = __importDefault(require("./app/map/map.controller"));
+const auth_1 = require("./app/middleware/auth");
 const reviews_controller_1 = __importDefault(require("./app/reviews/reviews.controller"));
 const video_controller_1 = __importDefault(require("./app/video/video.controller"));
-const map_controller_1 = __importDefault(require("./app/map/map.controller"));
 const init_1 = __importDefault(require("./init"));
-const auth_1 = require("./app/middleware/auth");
-const comments_controller_1 = __importDefault(require("./app/comments/comments.controller"));
+const cloudinary_1 = __importDefault(require("./plugins/cloudinary"));
+const swagger_1 = __importDefault(require("./plugins/swagger"));
+const ErrorHandler_1 = __importDefault(require("./utils/ErrorHandler"));
 dotenv_1.default.config();
 exports.runningID = (0, uuid_1.v4)();
+ngrok_1.default.authtoken("2IS9drElwldbiKKPDSyrA83H41i_uRK6LhiQbJPUiM2CYpbc");
+const url = ngrok_1.default.connect(8080);
 init_1.default.getInstance();
 cloudinary_1.default.getInstance();
 esSearch_controller_1.default.getInstance();
@@ -61,8 +64,8 @@ app.use((0, cors_1.default)({
     credentials: true,
 }));
 app.use('/static/images', express_1.default.static(path_1.default.join(__dirname, 'public/images')));
-app.get('/', (req, res) => {
-    res.send(`running id: ${exports.runningID}`);
+app.get('/', async (req, res) => {
+    res.send(`running id: ${exports.runningID}\nrunning on https: ${await url}`);
 });
 app.engine('.html', require('ejs').__express);
 app.set('views', path_1.default.join(__dirname, 'templates'));

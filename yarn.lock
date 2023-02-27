@@ -1358,14 +1358,6 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
-"@ngrok/ngrok-api@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.npmjs.org/@ngrok/ngrok-api/-/ngrok-api-0.9.0.tgz"
-  integrity sha512-3KNTj508Z2c9wYoGpAv55qJ5vzWyWFKKHwJJHY/n8iNjWhVVuwsWzq/+1hfHnnVH8ndww1kh5FLqKMEyjtvbbA==
-  dependencies:
-    node-fetch "^2.6.1"
-    wretch "^1.7.4"
-
 "@npmcli/fs@^1.0.0":
   version "1.1.1"
   resolved "https://registry.npmjs.org/@npmcli/fs/-/fs-1.1.1.tgz"
@@ -4293,7 +4285,7 @@ node-addon-api@^5.0.0:
   resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-5.0.0.tgz"
   integrity sha512-CvkDw2OEnme7ybCykJpVcKH+uAOLV2qLqiyla128dN9TkEWfrYmxG6C2boDe5KcNQqZF3orkqzGgOMvZ/JNekA==
 
-node-fetch@^2.6.1, node-fetch@^2.6.7:
+node-fetch@^2.6.7:
   version "2.6.7"
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.7.tgz"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
@@ -5461,11 +5453,6 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
-
-wretch@^1.7.4:
-  version "1.7.10"
-  resolved "https://registry.npmjs.org/wretch/-/wretch-1.7.10.tgz"
-  integrity sha512-UgF2o63bZRsz3LoOxaxzAUdFdlIJzVYbCHHhQ+LNMSBD1FeFJn8ADaekopJclHUm6sN8Lhu0DQFGQloliS0Twg==
 
 write-file-atomic@^4.0.1:
   version "4.0.2"

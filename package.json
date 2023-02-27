@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "pm2": "pm2 start dist/src/bin/www.js -f --watch -i --max-old-space-size=2048 && ngrok http 8080",
+    "pm2": "pm2 start dist/src/bin/www.js -f --watch -i --max-old-space-size=2048",
     "dev": "nodemon src/bin/www.ts NODE_ENV=test",
     "start": "ts-node src/bin/www.ts",
     "start:dev": "ts-node src/bin/www.ts --watch",

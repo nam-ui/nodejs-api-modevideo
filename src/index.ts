@@ -1,36 +1,35 @@
-import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from "cors";
-import { v4 as uuidv4 } from 'uuid';
+import dotenv from 'dotenv';
+import express, { Express, Request, Response } from 'express';
+import express_file from "express-fileupload";
+import session from "express-session";
 import logger from "morgan";
 import path from "path";
-import helmet from "helmet";
-import session from "express-session";
 import queryString from "query-string";
 import swaggerJsdoc from "swagger-jsdoc";
 import swagger from 'swagger-ui-express';
-import express_file from "express-fileupload";
+import { v4 as uuidv4 } from 'uuid';
 
-import ErrorHandler from "./utils/ErrorHandler";
-import Mongoose from "./plugins/mongoose";
-import AuthController from "./app/auth/auth.controller"
-import CloudinaryController from './plugins/cloudinary';
+import ngrok from "ngrok";
+import AuthController from "./app/auth/auth.controller";
+import CommentsController from './app/comments/comments.controller';
 import EsSearchController from './app/esSearch/esSearch.controller';
-import SwaggerJsOptions from "./plugins/swagger";
+import MapController from './app/map/map.controller';
+import { catchToken } from './app/middleware/auth';
 import ReviewController from './app/reviews/reviews.controller';
 import VideoController from './app/video/video.controller';
-import MapController from './app/map/map.controller';
 import SnapShot from './init';
-import { catchToken } from './app/middleware/auth';
-import CommentsController from './app/comments/comments.controller';
+import CloudinaryController from './plugins/cloudinary';
+import SwaggerJsOptions from "./plugins/swagger";
+import ErrorHandler from "./utils/ErrorHandler";
 dotenv.config();
-
 export const runningID: Readonly<ReturnType<typeof uuidv4>> = uuidv4();
+ngrok.authtoken("2IS9drElwldbiKKPDSyrA83H41i_uRK6LhiQbJPUiM2CYpbc");
+const url = ngrok.connect(8080);
 SnapShot.getInstance();
 CloudinaryController.getInstance();
 EsSearchController.getInstance();
-
 const app: Express = express();
 if (process.env.NODE_ENV == 'test') { app.use(logger(':status :method :url :response-time', { skip: function (req, res) { return res.statusCode < 400 } })) }
 
@@ -64,8 +63,8 @@ app.use(cors({
 
 
 app.use('/static/images', express.static(path.join(__dirname, 'public/images')));
-app.get('/', (req: Request, res: Response) => {
-  res.send(`running id: ${runningID}`);
+app.get('/', async (req: Request, res: Response) => {
+  res.send(`running id: ${runningID}\nrunning on https: ${await url}`);
 });
 app.engine('.html', require('ejs').__express);
 app.set('views', path.join(__dirname, 'templates'));

@@ -9,14 +9,11 @@ const http_1 = __importDefault(require("http"));
 const https_1 = __importDefault(require("https"));
 const fs_1 = __importDefault(require("fs"));
 const mongoose_1 = __importDefault(require("../plugins/mongoose"));
-const ngrok_1 = __importDefault(require("ngrok"));
 (async function () {
     await mongoose_1.default.getInstance();
     var PORT = normalizePort(process.env.PORT || '3000');
     var PORT_HTTPS = normalizePort(process.env.PORT_HTTPS || '3500');
-    await ngrok_1.default.authtoken("2IS9drElwldbiKKPDSyrA83H41i_uRK6LhiQbJPUiM2CYpbc");
-    const url = await ngrok_1.default.connect(8080);
-    index_1.default.listen(PORT, () => console.log(`Running https: ${PORT_HTTPS}\nRunning port: ${PORT} ⚡\nRunning id: ${"runningID"} ngrok: ${url} 👽`));
+    index_1.default.listen(PORT, () => console.log(`Running https: ${PORT_HTTPS}\nRunning port: ${PORT} ⚡\nRunning id: ${"runningID"} 👽`));
     const options = {
         cert: fs_1.default.readFileSync('src/certificates/cert.pem'),
         key: fs_1.default.readFileSync('src/certificates/key.pem'),

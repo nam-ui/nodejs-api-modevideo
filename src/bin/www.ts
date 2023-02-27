@@ -6,20 +6,18 @@ import path from "path";
 import fs from "fs";
 import { v4 as uuidv4 } from 'uuid';
 import Mongoose from "../plugins/mongoose";
-import ngrok from "ngrok";
+import express from "express";
+
 (async function () {
     await Mongoose.getInstance();
-    
+
     var PORT = normalizePort(process.env.PORT || '3000');
     var PORT_HTTPS = normalizePort(process.env.PORT_HTTPS || '3500');
-    await ngrok.authtoken("2IS9drElwldbiKKPDSyrA83H41i_uRK6LhiQbJPUiM2CYpbc")
-    const url = await ngrok.connect(8080);
-    app.listen(PORT, () => console.log(`Running https: ${PORT_HTTPS}\nRunning port: ${PORT} ⚡\nRunning id: ${"runningID"} ngrok: ${url} 👽`));
+    app.listen(PORT, () => console.log(`Running https: ${PORT_HTTPS}\nRunning port: ${PORT} ⚡\nRunning id: ${"runningID"} 👽`));
     const options = {
         cert: fs.readFileSync('src/certificates/cert.pem'),
         key: fs.readFileSync('src/certificates/key.pem'),
     };
-    
     var server = http.createServer(app);
     server.listen(5030);
     server.on('error', onError);
@@ -42,7 +40,7 @@ import ngrok from "ngrok";
         var bind = typeof PORT === 'string'
             ? 'Pipe ' + PORT
             : 'Port ' + PORT;
-    
+
         // handle specific listen errors with friendly messages
         switch (error.code) {
             case 'EACCES':
