@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "pm2": "pm2 start dist/src/bin/www.js -f --watch -i --max-old-space-size=2048 && ngrok http 8080",
     "dev": "nodemon src/bin/www.ts NODE_ENV=test",
     "start": "ts-node src/bin/www.ts",
     "start:dev": "ts-node src/bin/www.ts --watch",
@@ -55,6 +56,7 @@
     "lowdb": "^5.0.5",
     "mongoose": "^6.7.5",
     "morgan": "^1.10.0",
+    "ngrok": "^4.3.3",
     "query-string": "^7.1.3",
     "rand-token": "^1.0.1",
     "rxjs": "^7.6.0",
