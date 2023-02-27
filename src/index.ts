@@ -23,6 +23,7 @@ import VideoController from './app/video/video.controller';
 import MapController from './app/map/map.controller';
 import SnapShot from './init';
 import { catchToken } from './app/middleware/auth';
+import CommentsController from './app/comments/comments.controller';
 dotenv.config();
 
 export const runningID: Readonly<ReturnType<typeof uuidv4>> = uuidv4();
@@ -102,11 +103,13 @@ const auth = new AuthController(app, "/auth");
 const review = new ReviewController(app, "/reviews");
 const video = new VideoController(app, "/video");
 const map = new MapController(app, "/map");
+const comments = new CommentsController(app, "/comments");
 
 auth.start();
 review.start();
 video.start();
 map.start();
+comments.start();
 catchToken(app);
 
 new ErrorHandler(app).handler();

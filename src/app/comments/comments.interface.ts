@@ -6,14 +6,16 @@ export interface IComments {
    id_video: Types.ObjectId,
    map: [
       {
-         author: Types.ObjectId,
+         f_id: Types.ObjectId,
+         p_id: Types.ObjectId,
+         id_user: Types.ObjectId,
          note: string,
          hash_user: string[],
-         from: Types.ObjectId,
          heart: number,
          timeWrite: number,
       }
    ]
 }
+
 
 

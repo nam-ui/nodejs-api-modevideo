@@ -3,6 +3,7 @@ import { UploadedFile } from "express-fileupload";
 import fs from "fs";
 import { decode } from "jsonwebtoken";
 import { init } from "../../init";
+import { toHTMLHashtag } from "../../utils/hashToTagHTML";
 import AccountMongo from "../auth/auth.dto";
 import cloudinaryService from "../cloudinary/cloudinary.service";
 import CommentsMongo from "../comments/comments.dto";
@@ -63,12 +64,11 @@ class PostService extends MainRouter {
         await fs.rmSync(fileSource, { recursive: true, force: true })
         return _returnFunc;
     }
-
-
     static async getById(req: express.Request, res: express.Response, next: express.NextFunction) {
-        var video = await VideoMongo.findOne({ id: req.params.idVideo });
+        var video = await VideoMongo.findById(req.params.idVideo);
         var comments = await CommentsMongo.findById(video?.id_comments);
         var status = await StatusMongo.findById(video?.id_status);
+        var account = await AccountMongo.findById(video?.id_account);
         return {
             video_url: video?.video_url,
             cover_picture: video?.cover_picture,
@@ -77,7 +77,39 @@ class PostService extends MainRouter {
             hashtag: video?.hashtag,
             comments: comments,
             status: status,
+            account: {
+                given_name: account?.given_name,
+                family_name: account?.family_name,
+                picture: account?.picture,
+                sub: account?.sub,
+            }
         };
+    }
+    static async getList(req: express.Request, res: express.Response, next: express.NextFunction) {
+        var video = await VideoMongo.find().limit(10);
+        return await Promise.all(video.map(async el => {
+            var status = await StatusMongo.findById(el.id_status);
+            var video_note = await toHTMLHashtag(el.note as string);
+            var account = await AccountMongo.findById(el.id_account);
+            return {
+                to_path_user: `@${(account?.sub)}`,
+                to_path_video: `@${(account?.sub)}/video/${el.id}`,
+                follow: { isFollow: true, sub: account?.id },
+                video: {
+                    id: el.id,
+                    video_url: el.video_url,
+                    cover_picture: el.cover_picture,
+                    note: video_note,
+                    tag_account: el.tag_account,
+                    hashtag: el.hashtag,
+                },
+                status: {
+                    view: status?.view,
+                    heart: status?.heart,
+                },
+                account: account,
+            }
+        })).then(value => value);
     }
 }
 export default PostService;

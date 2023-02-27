@@ -41,5 +41,15 @@ export default class PostController {
                 return res.status(400).send({ status: 400, message: error })
             }
         });
+        PostController.application.get(`${PostController.baseURL}/get-list`, async (req, res, next) => {
+            try {
+                return res.send({
+                    status: 200,
+                    data: await VideoService.getList(req, res, next),
+                });
+            } catch (error: any) {
+                return res.status(400).send({ status: 400, message: error })
+            }
+        });
     }
 }
