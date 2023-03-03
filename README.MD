@@ -7,7 +7,7 @@ yarn --version 1.22.19 <br />
 -> setup { <br />
     step 1 ( install node_mondule ): yarn <br /> 
     step 2 ( run app ): yarn start || yarn run dev <br />
-    if you want to build server yarn run build <br />
+    if you want to build server cmd: yarn run build <br />
 } <br />
 -> deloy vps cmd: pm2 start dist/src/bin/www.js -f --watch -i --max-old-space-size=2048 <br />
 # environment  .env
