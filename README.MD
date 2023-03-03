@@ -1,42 +1,40 @@
+# setup
 git --version 2.38.1.windows.1
 npm--version 8.19.2
 node --version v16.18.0
-
-environment  .env
-
+yarn --version 1.22.19
+-> setup {
+    step 1 ( install node_mondule ): yarn
+    step 2 ( run app ): yarn start || yarn run dev
+    if you want to build server yarn run build
+}
+-> deloy vps cmd: pm2 start dist/src/bin/www.js -f --watch -i --max-old-space-size=2048
+# environment  .env
 PORT=8080
 PORT_HTTPS=8443
 NODE_ENV=test
-
-# ENV JWT
+<!-- # ENV JWT -->
 NODE_ENV_EXPIRES_IN_JWT=600
 NODE_ENV_ACCESS_TOKEN_SECRET="your key"
 NODE_ENV_REFRESH_TOKEN_SECRET="your key"
 NODE_ENV_SALT_OR_SOUNDS="101"
-
-# HANDLER IMAGE WITH CLOUDINARY
+<!-- # HANDLER IMAGE WITH CLOUDINARY -->
 NODE_ENV_CLOUDINARY_NAME=your-key
 NODE_ENV_CLOUDINARY_API_KEY=your-key
 NODE_ENV_CLOUDINARY_API_SECRET=your-key
-
-
-# DATABASE MONGODB NO SQL
+<!-- # DATABASE MONGODB NO SQL -->
 NODE_ENV_MONGO=your-key
-
-
-# LOGIN THREE Facebook
+<!-- # LOGIN THREE Facebook -->
 NODE_ENV_FB_APP_ID=your-key
 NODE_ENV_FB_APP_SECRET=your-key
 NODE_ENV_FB_APP_REDIRECT_URL=your-key-https
-# LOGIN THREE Google
+<!-- # LOGIN THREE Google -->
 NODE_ENV_GOOGLE_APP_ID=your-key
 NODE_ENV_GOOGLE_APP_SECRET=your-key
 NODE_ENV_GOOGLE_APP_REDIRECT_URL=your-key-https
     ## GOOGLE KEY - DRIVER - MAP 
     NODE_ENV_GOOGLE_API_KEY=your-key
-
-
-# Elastic search
+<!-- # Elastic search -->
 NODE_ENV_ELASTIC_SEARCH_KEY=your-key
 NODE_ENV_ELASTIC_SEARCH_CLOUD_ID=your-key
 
