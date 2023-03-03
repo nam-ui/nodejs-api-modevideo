@@ -3,7 +3,7 @@ RUN apk add --no-cache yarn
 WORKDIR /app
 COPY . .
 RUN yarn
-Run yarn build
+RUN yarn build
 CMD [ "yarn", "start" ]
 
 EXPOSE 8080
