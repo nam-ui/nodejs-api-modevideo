@@ -1,15 +1,15 @@
 # setup
-git --version 2.38.1.windows.1
-npm--version 8.19.2
-node --version v16.18.0
-yarn --version 1.22.19
-/n
--> setup {
-    step 1 ( install node_mondule ): yarn
-    step 2 ( run app ): yarn start || yarn run dev
-    if you want to build server yarn run build
-}
--> deloy vps cmd: pm2 start dist/src/bin/www.js -f --watch -i --max-old-space-size=2048
+git --version 2.38.1.windows.1 <br />
+npm--version 8.19.2 <br />
+node --version v16.18.0 <br />
+yarn --version 1.22.19 <br />
+<br />
+-> setup { <br />
+    step 1 ( install node_mondule ): yarn <br /> 
+    step 2 ( run app ): yarn start || yarn run dev <br />
+    if you want to build server yarn run build <br />
+} <br />
+-> deloy vps cmd: pm2 start dist/src/bin/www.js -f --watch -i --max-old-space-size=2048 <br />
 # environment  .env
 PORT=8080
 PORT_HTTPS=8443
