@@ -3,6 +3,7 @@ git --version 2.38.1.windows.1
 npm--version 8.19.2
 node --version v16.18.0
 yarn --version 1.22.19
+/n
 -> setup {
     step 1 ( install node_mondule ): yarn
     step 2 ( run app ): yarn start || yarn run dev
